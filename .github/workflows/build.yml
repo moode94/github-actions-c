@@ -10,8 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+ 
       - run: |
           docker build -t c-app .
           docker build -t m00de994/test1/c-app:$GITHUB_SHA .
+          docker push m00de994/test1/c-app:$GITHUB_SHA .
 
     
